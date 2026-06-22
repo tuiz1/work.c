@@ -6,7 +6,7 @@ CFLAGS  = -Wall -Wextra -g
 LDFLAGS = -lpthread
 
 # 需要链接 pthread 的目标
-THREAD_APPS = server_thread server_threadpool stress_test
+THREAD_APPS = server_thread server_threadpool server_threadpool_cv stress_test
 
 # 不需要链接 pthread 的目标
 NORMAL_APPS = client server server_process
@@ -34,6 +34,9 @@ server_thread: server_thread.c $(COMMON_OBJ) common.h
 
 server_threadpool: server_threadpool.c $(COMMON_OBJ) common.h
 	$(CC) $(CFLAGS) -o $@ server_threadpool.c $(COMMON_OBJ) $(LDFLAGS)
+
+server_threadpool_cv: server_threadpool_cv.c $(COMMON_OBJ) common.h
+	$(CC) $(CFLAGS) -o $@ server_threadpool_cv.c $(COMMON_OBJ) $(LDFLAGS)
 
 stress_test: stress_test.c $(COMMON_OBJ) common.h
 	$(CC) $(CFLAGS) -o $@ stress_test.c $(COMMON_OBJ) $(LDFLAGS)
