@@ -9,9 +9,10 @@
 /* ---- 词法 Token ---- */
 typedef enum { TK_NUM, TK_ADD, TK_SUB, TK_MUL, TK_DIV, TK_LP, TK_RP, TK_END } TokenKind;
 
-static const char *s;  // 当前扫描位置
-static TokenKind  tok; // 当前 token
-static int        val; // 当前数字（当 tok == TK_NUM）
+static const char *s;    // 当前扫描位置
+static TokenKind  tok;   // 当前 token
+static int        val;   // 当前数字（当 tok == TK_NUM）
+static int        error; // 错误标志: 0=正常, 1=除零, 2=非法字符
 
 /* 取下一个 token */
 static void next_token(void) {
@@ -60,7 +61,7 @@ static int term(void) {
         int r = factor();
         if (op == TK_MUL) v *= r;
         else {
-            if (r == 0) { v = 0; break; }  // 除零保护
+            if (r == 0) { error = 1; v = 0; break; }  // 除零错误
             v /= r;
         }
     }
@@ -85,12 +86,21 @@ static int expr(void) {
  */
 int calculate(const char *expr_str, char *result, int maxlen) {
     s = expr_str;
+    error = 0;
     next_token();
     if (tok == TK_END) {
         snprintf(result, maxlen, "错误: 空表达式");
         return -1;
     }
     int v = expr();
+    if (error == 1) {
+        snprintf(result, maxlen, "错误: 除零");
+        return -1;
+    }
+    if (tok != TK_END) {
+        snprintf(result, maxlen, "错误: 非法表达式");
+        return -1;
+    }
     snprintf(result, maxlen, "%d", v);
     return 0;
 }
