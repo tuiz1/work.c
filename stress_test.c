@@ -6,6 +6,7 @@
 #include "common.h"
 #include <pthread.h>
 #include <sys/time.h>
+#include <math.h>
 
 typedef struct {
     const char *server_ip;

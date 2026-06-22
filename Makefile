@@ -39,7 +39,7 @@ server_threadpool_cv: server_threadpool_cv.c $(COMMON_OBJ) common.h
 	$(CC) $(CFLAGS) -o $@ server_threadpool_cv.c $(COMMON_OBJ) $(LDFLAGS)
 
 stress_test: stress_test.c $(COMMON_OBJ) common.h
-	$(CC) $(CFLAGS) -o $@ stress_test.c $(COMMON_OBJ) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ stress_test.c $(COMMON_OBJ) $(LDFLAGS) -lm
 
 # 公共对象
 calculate.o: calculate.c common.h
