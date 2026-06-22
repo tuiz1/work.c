@@ -1,0 +1,20 @@
+# 临时文件
+*.o
+*~
+~$*
+*.tmp
+docx_output.txt
+
+# 编译产物（保留源代码编译即可）
+client
+server
+server_process
+server_thread
+server_threadpool
+test_env
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
